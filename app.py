@@ -22,6 +22,11 @@ def get_chatgpt_response(prompt):
     response = requests.post("https://openrouter.ai/api/v1/chat/completions", headers=headers, json=data)
     return response.json()['choices'][0]['message']['content']
 
+@app.route("/", methods=["GET"])
+def home():
+    return "Shinigami.X is online!"
+
+
 @app.route("/whatsapp", methods=["POST"])
 def whatsapp_reply():
     incoming_msg = request.form.get('Body')
@@ -40,7 +45,7 @@ def whatsapp_reply():
 
 import os
 
-if __name__ == "_main_":
+if __name__ == "__main__":
     port = int(os.environ.get("PORT", 10000))  # Default to 10000 if PORT not set
     app.run(host="0.0.0.0", port=port, debug=True)
 
