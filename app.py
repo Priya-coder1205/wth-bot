@@ -1,6 +1,9 @@
 from flask import Flask, request
 import requests
 
+from twilio.twiml.messaging_response
+import MessagingResponse
+
 app = Flask(__name__)
 
 # Use your actual OpenRouter API key here
@@ -30,18 +33,15 @@ def home():
 @app.route("/whatsapp", methods=["POST"])
 def whatsapp_reply():
     incoming_msg = request.form.get('Body')
-    from_number = request.form.get('From')
+    resp = MessagingResponse()
+
+    if incoming_msg:
+        reply = get_chatgpt_response(incoming_msg)
+        resp.message(reply)
+    else:
+        resp.message("Send something!")
     
-    if not incoming_msg:
-        return "<Response><Message>Send something!</Message></Response>"
-
-    reply = get_chatgpt_response(incoming_msg)
-
-    return f"""
-    <Response>
-        <Message>{reply}</Message>
-    </Response>
-    """
+    return str(resp), 200
 
 import os
 
