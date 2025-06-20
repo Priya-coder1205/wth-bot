@@ -42,5 +42,5 @@ import os
 
 if __name__ == "_main_":
     port = int(os.environ.get("PORT", 10000))  # Default to 10000 if PORT not set
-    app.run(debug=True, host="0.0.0.0", port=port)
+    app.run(host="0.0.0.0", port=port, debug=True)
 
